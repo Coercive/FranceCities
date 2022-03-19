@@ -11,3 +11,42 @@ Retrieve the CSV file from La Poste for postal codes and GPS coordinates. [https
 
 ### INSSEE - List of french cities
 Retrieve INSEE Excel data for the list of french cities. Communal division - Table of geographical affiliation of the municipalities. [https://www.insee.fr/fr/information/2028028]
+
+## Convert XLSX
+First, the INSEE .xlsx file must be converted. It is necessary to recover the first sheet "COM" (List of municipalities) and the second sheet "ARM" (Municipal districts).
+
+You can use external software to do this, or use phpoffice/phpspreadsheet directly in php in the same script. [https://github.com/PHPOffice/PhpSpreadsheet]
+
+```php
+<?php
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
+
+# INSEE .xlsx filepath
+$source = '/table-appartenance-geo-communes.xlsx';
+
+# Sheet 1 : [COM] Communes (List of municipalities)
+$insee_com = '/insee_com.csv';
+
+# Load Excel sheet and Transform
+$reader = new Xlsx;
+$reader->setReadDataOnly(true); # do not convert to integer
+$sheet = $reader->load($source);
+$writer = new Csv($sheet);
+$writer->setDelimiter(';');
+$writer->setSheetIndex(0); # select first sheet
+$writer->save($insee_com);
+
+# Sheet 2 : [ARM] Arrondissements (Municipal districts)
+$insee_arm = '/insee_arm.csv';
+
+# Load Excel sheet and Transform
+$reader = new Xlsx;
+$reader->setReadDataOnly(true); # do not convert to integer
+$sheet = $reader->load($source);
+$writer = new Csv($sheet);
+$writer->setDelimiter(';');
+$writer->setSheetIndex(1); # select second sheet
+$writer->save($insee_arm);
+```
