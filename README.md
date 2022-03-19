@@ -72,3 +72,25 @@ $importer->onlyHeader([
 ]);
 $laposte_data = $importer->get();
 ```
+
+## Read INSEE COM data .csv (sheet 1)
+Get only the necessary fields, and convert the csv to a php array.
+
+```php
+<?php
+use Coercive\Utility\Csv\Importer;
+
+# Sheet 1 : [COM] Communes (List of municipalities)
+$insee_com = '/insee_com.csv';
+
+$importer = new Importer($insee_com, ';');
+$importer->seek(5); # skip introduction paragraphs
+$importer->parseHeader(false);
+$importer->onlyHeader([
+  'CODGEO',
+  'LIBGEO',
+  'DEP',
+  'REG',
+]);
+$insee_com_data = $importer->get();
+```
