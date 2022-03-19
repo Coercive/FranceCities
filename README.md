@@ -19,6 +19,11 @@ Retrieve the CSV file from La Poste for postal codes and GPS coordinates. [https
 ### INSSEE - List of french cities
 Retrieve INSEE Excel data for the list of french cities. Communal division - Table of geographical affiliation of the municipalities. [https://www.insee.fr/fr/information/2028028]
 
+## Warning
+***
+> The following code examples are in PHP.
+***
+
 ## Convert XLSX
 First, the INSEE .xlsx file must be converted. It is necessary to recover the first sheet "COM" (List of municipalities) and the second sheet "ARM" (Municipal districts).
 
