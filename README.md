@@ -50,8 +50,9 @@ $writer->setDelimiter(';');
 $writer->setSheetIndex(1); # select second sheet
 $writer->save($insee_arm);
 ```
+## (1) READ DATAS
 
-## Read LA POSTE data .csv
+### Read LA POSTE data .csv
 Get only the necessary fields, and convert the csv to a php array.
 
 ```php
@@ -73,7 +74,7 @@ $importer->onlyHeader([
 $laposte_data = $importer->get();
 ```
 
-## Read INSEE COM data .csv (sheet 1)
+### Read INSEE COM data .csv (sheet 1)
 Get only the necessary fields, and convert the csv to a php array.
 
 ```php
@@ -95,7 +96,7 @@ $importer->onlyHeader([
 $insee_com_data = $importer->get();
 ```
 
-## Read INSEE ARM data .csv (sheet 2)
+### Read INSEE ARM data .csv (sheet 2)
 Get only the necessary fields, and convert the csv to a php array.
 
 ```php
@@ -116,4 +117,33 @@ $importer->onlyHeader([
   'COM', # Communes englobantes (surrounding municipalities)
 ]);
 $insee_arm_data = $importer->get();
+```
+
+## (2) PARSE DATAS
+
+### Parse INSEE ARM data
+Arranges and prepares the data before the merging step.
+
+```php
+<?php
+# Data from the previous step
+$insee_arm_data = $importer->get();
+
+$districts = [];
+foreach ($insee_arm_data as $arm) {
+  if($code = $arm['CODGEO']) {
+    if(isset($districts[$code])) {
+      die('District already exist with code : ' . $code);
+    }
+    $districts[$code] = [
+      'REF_INSEE' => $code,
+      'NAME' => trim($arm['LIBGEO']),
+      'SLUG' => $this->Slugify->clean(trim($arm['LIBGEO'])),
+      'NORMALIZED' => $this->Slugify->clean(trim($arm['LIBGEO']), ' '),
+      'DEPARTMENT' => $arm['DEP'],
+      'REGION' => $arm['REG'],
+      'DISTRICT_OF' => $arm['COM'],
+    ];
+  }
+}
 ```
