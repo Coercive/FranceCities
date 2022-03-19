@@ -181,3 +181,35 @@ foreach ($insee_com_data as $com) {
 #### Get Coercive/Slugify utility
 More information here [https://github.com/Coercive/Slugify]
 
+### Parse La POSTE data
+Arranges and prepares the data before the merging step.
+
+```php
+<?php
+# Data from the previous step
+$laposte_data = $importer->get();
+
+$coordinates = [];
+foreach ($laposte_data as $lp) {
+  if($code = $lp['Code_commune_INSEE']) {
+    # Additionnals zip codes for the same city
+    if(isset($coordinates[$code])) {
+      if(!in_array($lp['Code_postal'], $coordinates[$code]['ZIP_CODES'])) {
+        $coordinates[$code]['ZIP_CODES'][] = $lp['Code_postal'];
+        continue;
+      }
+    }
+    # Add city
+    else {
+      $coordinates[$code] = [
+        'REF_INSEE' => $code,
+        'NAME' => $lp['Nom_commune'],
+        'GPS' => $lp['coordonnees_gps'],
+        'ZIP_CODES' => [
+          $lp['Code_postal']
+        ],
+      ];
+    }
+  }
+}
+```
