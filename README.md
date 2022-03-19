@@ -213,3 +213,58 @@ foreach ($laposte_data as $lp) {
   }
 }
 ```
+
+## (3) MERGE & SAVE DATAS
+
+```php
+<?php
+foreach (array_merge($towns, $districts) as $town) {
+
+  # If it's a district of Lyon, Paris or Marseille, we still create a global entry for the city
+  # with as GPS position from the first main district data.
+  $isMapped = false;
+  $mappedCode = $town['REF_INSEE'];
+  if(!array_key_exists($mappedCode, $coordinates)) {
+    foreach ($districts as $district) {
+      if($mappedCode === $district['DISTRICT_OF']) {
+        $isFirst = (bool) preg_match('`^\d+1$`', $district['REF_INSEE']);
+        if($isFirst) {
+          $isMapped = true;
+          $mappedCode = $district['REF_INSEE'];
+        }
+      }
+    }
+  }
+
+  # Zip codes
+  # If former cities : use main departement zip extends with empty (000) suffix
+  $zipCodes = implode(',', $coordinates[$mappedCode]['ZIP_CODES'] ?? []);
+  if($isMapped) {
+    $zipCodes = $town['DEPARTMENT'] . '000';
+  }
+
+  # Add GPS if exist
+  $latitude = '';
+  $longitude = '';
+  if(isset($coordinates[$mappedCode]) && $coordinates[$mappedCode]['GPS']) {
+    $gps = explode(',', $coordinates[$mappedCode]['GPS']);
+    $latitude = trim($gps[0] ?? '');
+    $longitude = trim($gps[1] ?? '');
+  }
+
+  # Save the data (use your database object, or save in csv, or whatever else you want...)
+  $entry = [
+    'REF_INSEE' => $town['REF_INSEE'],
+    'NAME' => $town['NAME'],
+    'SLUG' => $town['SLUG'],
+    'NORMALIZED' => $town['NORMALIZED'],
+    'DEPARTMENT' => $town['DEPARTMENT'],
+    'REGION' => $town['REGION'],
+    'IS_DISTRICT' => $town['DISTRICT_OF'] ? '1' : '0',
+    'DISTRICT_OF' => $town['DISTRICT_OF'],
+    'ZIP_CODES' => $zipCodes,
+    'LATITUDE' => $latitude,
+    'LONGITUDE' => $longitude,
+  ]);
+}
+```
