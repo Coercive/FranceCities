@@ -94,3 +94,26 @@ $importer->onlyHeader([
 ]);
 $insee_com_data = $importer->get();
 ```
+
+## Read INSEE ARM data .csv (sheet 2)
+Get only the necessary fields, and convert the csv to a php array.
+
+```php
+<?php
+use Coercive\Utility\Csv\Importer;
+
+# Sheet 2 : [ARM] Arrondissements (Municipal districts)
+$insee_arm = '/insee_arm.csv';
+
+$importer = new Importer($insee_arm, ';');
+$importer->seek(5); # skip introduction paragraphs
+$importer->parseHeader(false);
+$importer->onlyHeader([
+  'CODGEO',
+  'LIBGEO',
+  'DEP',
+  'REG',
+  'COM', # Communes englobantes (surrounding municipalities)
+]);
+$insee_arm_data = $importer->get();
+```
