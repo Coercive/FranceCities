@@ -147,3 +147,37 @@ foreach ($insee_arm_data as $arm) {
   }
 }
 ```
+
+#### Get Coercive/Slugify utility
+More information here [https://github.com/Coercive/Slugify]
+
+### Parse INSEE COM data
+Arranges and prepares the data before the merging step.
+
+```php
+<?php
+# Data from the previous step
+$insee_com_data = $importer->get();
+
+$towns = [];
+foreach ($insee_com_data as $com) {
+  if($code = $com['CODGEO']) {
+    if(isset($towns[$code])) {
+      die('Town already exist with code : ' . $code);
+    }
+    $towns[$code] = [
+      'REF_INSEE' => $code,
+      'NAME' => trim($com['LIBGEO']),
+      'SLUG' => $this->Slugify->clean(trim($com['LIBGEO'])),
+      'NORMALIZED' => $this->Slugify->clean(trim($com['LIBGEO']), ' '),
+      'DEPARTMENT' => $com['DEP'],
+      'REGION' => $com['REG'],
+      'DISTRICT_OF' => '',
+    ];
+  }
+}
+```
+
+#### Get Coercive/Slugify utility
+More information here [https://github.com/Coercive/Slugify]
+
