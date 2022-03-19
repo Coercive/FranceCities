@@ -227,6 +227,11 @@ foreach ($laposte_data as $lp) {
 ```
 
 ## (3) MERGE & SAVE DATAS
+At this stage, we merge data from cities and city districts.
+
+We complete the data with zip codes and GPS coordinates.
+
+Then, if the city is a former city, we assign it the department code with an empty suffix (000) for its zip code, as well as the GPS coordinates of the main district (the first).
 
 ```php
 <?php
