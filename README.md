@@ -50,3 +50,25 @@ $writer->setDelimiter(';');
 $writer->setSheetIndex(1); # select second sheet
 $writer->save($insee_arm);
 ```
+
+## Read LA POSTE data .csv
+Get only the necessary fields, and convert the csv to a php array.
+
+```php
+<?php
+use Coercive\Utility\Csv\Importer;
+
+# Delimiter ;
+# Columns : Code_commune_INSEE;Nom_commune;Code_postal;Ligne_5;Libellé_d_acheminement;coordonnees_gps
+$source = '/laposte_hexasmal.csv';
+
+$importer = new Importer($source, ';');
+$importer->parseHeader();
+$importer->onlyHeader([
+  'Code_commune_INSEE',
+  'Nom_commune',
+  'Code_postal',
+  'coordonnees_gps',
+]);
+$laposte_data = $importer->get();
+```
