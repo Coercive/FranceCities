@@ -268,3 +268,13 @@ foreach (array_merge($towns, $districts) as $town) {
   ]);
 }
 ```
+
+## (4) MANUAL WORK
+
+2022 : 3 cities have no GPS data. We have to do manual search and add the data.
+
+I took a position close to the churches for reference.
+
+- 55000 Culey : 48.755322, 5.266420
+- 76420 Bihorel : 49.455277, 1.116896
+- 76780 Saint-Lucien : 49.508528, 1.449226
