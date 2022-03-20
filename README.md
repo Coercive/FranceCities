@@ -19,7 +19,7 @@ Retrieve the CSV file from La Poste for postal codes and GPS coordinates. [https
 ### INSSEE - List of french cities
 Retrieve INSEE Excel data for the list of french cities. Communal division - Table of geographical affiliation of the municipalities. [https://www.insee.fr/fr/information/2028028]
 
-## Warning
+## Programming language used
 ***
 > The following code examples are in PHP.
 ***
