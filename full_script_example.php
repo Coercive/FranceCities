@@ -1,4 +1,16 @@
 <?php
+/**
+ * FRANCE CITIES EXAMPLE SCRIPT
+ *
+ * SEE THE README.md
+ *
+ * @link https://github.com/Coercive/FranceCities
+ *
+ * @author Anthony Moral <contact@coercive.fr>
+ * @copyright 2022 Anthony Moral
+ * @license MIT
+ */
+
 namespace Coercive\FranceCities;
 
 use Coercive\Utility\Csv\Importer;
