@@ -1,12 +1,15 @@
 # FranceCities
 List of France cities with zip codes, department codes, region codes, districts for former cities, GPS latitude longitude coordinates, and INSEE reference code.
 
-## 2022
+## 2022 - French cities
 There are **34,955** cities in France on January 1, 2022, to which are added **45** city districts.
 
 That is a total of **35,000 entries**, with of course several zip codes for some.
 
 2022 data files are available in **2022_datas** directory *(CSV, CSV for MS Excel, SQL, XLSX, YAML)*
+
+## 2022 - French overseas collectivities
+List of **94** french overseas collectivities are available separately in **overseas_collectivities** directory.
 
 ## Foreword
 The approach comes from the author **Thomas Loiret**, who offers on the following link reliable sources and a way to compile them. [https://b0uh.github.io/how-to-get-the-list-of-french-cities-and-more.html]
