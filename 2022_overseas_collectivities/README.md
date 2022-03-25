@@ -1,20 +1,5 @@
-# FranceCities - Overseas collectivities
-List of France overseas collectivities with zip codes, department codes, GPS latitude longitude coordinates, and INSEE reference code.
-
-## 2022
-There are **94** french overseas collectivities on March 1, 2017.
-
-2022 data files are available in **overseas_collectivities** directory *(CSV, CSV for MS Excel, SQL, XLSX, YAML)*
-
-## Sources
-
-### INSSEE - List of overseas collectivities
-Retrieve manually municipalities lists from here [https://www.insee.fr/fr/information/2028040]
-
-## Programming language used
-***
-> The following code examples are in PHP.
-***
+# French Overseas Collectivities - Process Explanation
+See the main readme for global information.
 
 ## (1) Set cities to import as a php array
 Made manually from the INSEE page source
